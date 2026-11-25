@@ -3,346 +3,406 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Global Forest Disturbance Change — Virtual Townhalls (Preview)</title>
+  <title>Global Forest Disturbance Change — Townhalls</title>
   <style>
     :root {
       --primary: #0065bd;
-      --primary-dark: #005293;
-      --bg: #f5f7fa;
+      --primary-hover: #005293;
+      --primary-tint: #f2f7fc;
+      --bg: #f6f8fa;
       --surface: #ffffff;
-      --border: #d8e0e8;
-      --text: #1c2430;
-      --muted: #58667a;
+      --border: #e1e6ec;
+      --border-strong: #cbd3dc;
+      --text: #161d26;
+      --muted: #5c6878;
+      --subtle: #7b8794;
       --danger-bg: #fef2f2;
-      --danger-border: #f8b4b4;
-      --danger-text: #9b1c1c;
-      --info-bg: #f0f7ff;
-      --info-border: #bfdbfe;
-      --info-text: #1e40af;
+      --danger-border: #fecaca;
+      --danger-text: #991b1b;
       --success-bg: #ecfdf5;
-      --success-border: #a7f3d0;
       --success-text: #065f46;
-      --warn-bg: #fffbeb;
-      --warn-border: #fcd34d;
-      --warn-text: #92400e;
       --radius: 10px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
-    .preview-banner {
-      background: var(--warn-bg);
-      border-bottom: 1px solid var(--warn-border);
-      color: var(--warn-text);
-      padding: 0.6rem 1rem;
-      text-align: center;
-      font-size: 0.86rem;
+    .preview-bar {
+      max-width: 680px;
+      margin: 1.25rem auto -1.25rem;
+      padding: 0 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--subtle);
     }
-    .preview-banner button {
-      margin-left: 0.6rem;
-      padding: 0.2rem 0.6rem;
+    .preview-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .preview-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f59e0b;
+      display: inline-block;
+    }
+    .preview-bar button {
+      background: transparent;
+      border: 1px solid var(--border-strong);
       border-radius: 6px;
-      border: 1px solid var(--warn-border);
-      background: #fff;
-      color: var(--warn-text);
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 0.22rem 0.6rem;
+      font: inherit;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--muted);
       cursor: pointer;
     }
+    .preview-bar button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #fff;
+    }
     .container {
-      max-width: 780px;
-      margin: 1.75rem auto;
-      padding: 0 1rem 3rem;
+      max-width: 680px;
+      margin: 2rem auto 3.5rem;
+      padding: 0 1.25rem;
     }
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      box-shadow: 0 2px 10px rgba(16, 24, 40, 0.04);
+      border-top: 3px solid var(--primary);
+      border-radius: 12px;
+      padding: 2.25rem 2.5rem;
+      box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.04);
     }
-    .org-tag {
-      display: inline-block;
+    .kicker {
       font-size: 0.78rem;
       font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      letter-spacing: 0.03em;
       color: var(--primary);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
-    h1 { margin: 0 0 0.6rem; font-size: 1.7rem; line-height: 1.25; }
-    .subtitle { margin: 0 0 1.25rem; color: var(--muted); font-size: 0.96rem; }
-    .info-box {
-      background: var(--info-bg);
-      border: 1px solid var(--info-border);
-      color: var(--info-text);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
-      font-size: 0.89rem;
-      margin-bottom: 1.5rem;
+    h1 {
+      margin: 0 0 0.55rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
     }
-    .info-box a { color: var(--primary-dark); font-weight: 600; }
+    .subtitle {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.85rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-strip a { color: var(--primary); text-decoration: none; font-weight: 500; }
+    .meta-strip a:hover { text-decoration: underline; }
+    .meta-dot { color: var(--border-strong); }
     .alert-error {
       display: none;
       background: var(--danger-bg);
       border: 1px solid var(--danger-border);
       color: var(--danger-text);
-      padding: 0.85rem 1rem;
+      padding: 0.75rem 0.95rem;
       border-radius: 8px;
       margin-bottom: 1.5rem;
-      font-size: 0.94rem;
+      font-size: 0.9rem;
     }
-    .section-title {
-      font-size: 1.02rem;
-      font-weight: 600;
-      margin: 1.6rem 0 0.4rem;
-      padding-top: 1.15rem;
-      border-top: 1px solid #edf2f7;
-    }
-    .section-title.first { margin-top: 0; padding-top: 0; border-top: none; }
-    .section-hint { font-size: 0.85rem; color: var(--muted); margin: 0 0 0.9rem; }
-    .session-list { display: grid; gap: 0.85rem; margin-bottom: 0.5rem; }
-    .session-option {
-      display: block;
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.15rem;
-      cursor: pointer;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
-    }
-    .session-option:hover { border-color: var(--primary); background: #f8fbff; }
-    .session-option.is-selected { border-color: var(--primary); background: #f0f7ff; }
-    .session-header {
+    .section-head {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 1.85rem 0 0.85rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid #eef1f5;
     }
-    .session-left { display: flex; align-items: flex-start; gap: 0.65rem; }
+    .section-head.first { margin-top: 0; padding-top: 0; border-top: none; }
+    .section-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--subtle);
+    }
+    .section-note { font-size: 0.8rem; color: var(--subtle); }
+    .session-list { display: grid; gap: 0.65rem; }
+    .session-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      transition: border-color 0.14s ease, background-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .session-option:hover { border-color: var(--primary); background: #fafcff; }
+    .session-option.is-selected {
+      border-color: var(--primary);
+      background: var(--primary-tint);
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    .session-left { display: flex; align-items: flex-start; gap: 0.7rem; min-width: 0; }
     .session-left input[type="radio"] {
-      margin-top: 0.25rem;
-      width: 1.05rem;
-      height: 1.05rem;
+      margin: 0.25rem 0 0;
+      width: 1rem;
+      height: 1rem;
       accent-color: var(--primary);
+      flex-shrink: 0;
     }
-    .session-name { font-weight: 600; font-size: 1rem; }
-    .session-time { font-size: 0.91rem; color: var(--primary-dark); font-weight: 500; margin-top: 0.15rem; }
-    .session-desc { margin: 0.45rem 0 0 1.7rem; font-size: 0.88rem; color: var(--muted); }
-    .badge {
-      font-size: 0.77rem;
+    .session-time { font-weight: 600; font-size: 0.94rem; color: var(--text); }
+    .session-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+    .session-tag {
+      font-size: 0.74rem;
       font-weight: 600;
+      color: var(--muted);
+      background: #f1f4f8;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
       white-space: nowrap;
-      background: var(--success-bg);
-      color: var(--success-text);
+      flex-shrink: 0;
     }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.95rem; }
-    .grid-name { display: grid; grid-template-columns: 115px 1fr 1fr; gap: 0.95rem; }
-    .grid-city { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 0.95rem; }
-    @media (max-width: 640px) {
-      .grid-2, .grid-name, .grid-city { grid-template-columns: 1fr; }
-      .card { padding: 1.25rem; }
+    .session-option.is-selected .session-tag {
+      background: #dbeafe;
+      color: var(--primary-hover);
     }
-    .field { margin-bottom: 1rem; }
-    label.field-label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.32rem; }
-    .optional { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .grid-name { display: grid; grid-template-columns: 96px 1fr 1fr; gap: 0.85rem; }
+    .grid-city { display: grid; grid-template-columns: 130px 1fr 1fr; gap: 0.85rem; }
+    .field { margin-bottom: 0.9rem; }
+    label.field-label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #2c3746;
+      margin-bottom: 0.3rem;
+    }
+    .opt { font-weight: 400; color: var(--subtle); }
     input[type="text"], input[type="email"], select, textarea {
       width: 100%;
-      padding: 0.62rem 0.78rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      padding: 0.56rem 0.75rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 7px;
       font: inherit;
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       color: var(--text);
       background: #fff;
+      transition: border-color 0.14s ease, box-shadow 0.14s ease;
     }
+    input::placeholder, textarea::placeholder { color: #9aa5b1; }
     input:focus, select:focus, textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(0, 101, 189, 0.15);
+      box-shadow: 0 0 0 3px rgba(0, 101, 189, 0.12);
     }
-    textarea { resize: vertical; min-height: 86px; }
+    textarea { resize: vertical; min-height: 72px; }
     .consent {
       display: flex;
-      gap: 0.65rem;
+      gap: 0.6rem;
       align-items: flex-start;
-      margin: 1.25rem 0 1.5rem;
-      font-size: 0.87rem;
+      margin: 1.35rem 0 1.4rem;
+      font-size: 0.83rem;
       color: var(--muted);
     }
     .consent input[type="checkbox"] {
       margin-top: 0.2rem;
-      width: 1.05rem;
-      height: 1.05rem;
+      width: 1rem;
+      height: 1rem;
       accent-color: var(--primary);
       flex-shrink: 0;
     }
-    .consent a { color: var(--primary); }
+    .consent a { color: var(--primary); text-decoration: none; }
+    .consent a:hover { text-decoration: underline; }
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.78rem 1.25rem;
+      padding: 0.72rem 1.2rem;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 0.96rem;
+      font-size: 0.92rem;
       text-decoration: none;
       cursor: pointer;
       border: 1px solid transparent;
+      transition: background-color 0.14s ease;
     }
     .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-dark); }
-    .btn-full { width: 100%; font-size: 1rem; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-full { width: 100%; font-size: 0.96rem; padding: 0.78rem 1.25rem; }
     .btn-secondary { background: #fff; color: var(--text); border-color: var(--border); }
-    .btn-secondary:hover { background: #f3f4f6; }
-    .status-pill {
+    .btn-secondary:hover { background: #f3f5f8; }
+    .pill {
       display: inline-block;
       background: var(--success-bg);
-      border: 1px solid var(--success-border);
       color: var(--success-text);
       font-weight: 600;
-      font-size: 0.85rem;
-      padding: 0.25rem 0.7rem;
+      font-size: 0.78rem;
+      padding: 0.22rem 0.65rem;
       border-radius: 999px;
       margin-bottom: 0.75rem;
     }
     .summary {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.15rem 1.25rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 0;
       margin-bottom: 1.5rem;
     }
     .row {
       display: grid;
-      grid-template-columns: 155px 1fr;
+      grid-template-columns: 135px 1fr;
       gap: 0.5rem;
-      padding: 0.35rem 0;
-      font-size: 0.93rem;
+      padding: 0.32rem 0;
+      font-size: 0.9rem;
     }
-    @media (max-width: 560px) { .row { grid-template-columns: 1fr; gap: 0.1rem; } }
-    .row-label { color: var(--muted); font-weight: 500; }
+    .row-label { color: var(--subtle); font-weight: 500; }
     .row-val { word-break: break-word; }
-    .row-val a { color: var(--primary); }
-    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
-    .footer { text-align: center; margin-top: 1.25rem; font-size: 0.84rem; color: var(--muted); }
-    .footer a { color: var(--primary); text-decoration: none; }
+    .row-val a { color: var(--primary); text-decoration: none; }
+    .row-val a:hover { text-decoration: underline; }
+    .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .note { font-size: 0.83rem; color: var(--subtle); margin: 0; }
+    .footer { text-align: center; margin-top: 1.25rem; font-size: 0.8rem; color: var(--subtle); }
     .hidden { display: none; }
+    @media (max-width: 600px) {
+      .container { margin: 1.25rem auto 2.5rem; padding: 0 0.85rem; }
+      .preview-bar { padding: 0 0.85rem; margin-bottom: -0.75rem; }
+      .card { padding: 1.5rem 1.25rem; }
+      .grid-2, .grid-name, .grid-city, .row { grid-template-columns: 1fr; }
+      .session-option { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
-  <div class="preview-banner">
-    <strong>Interactive Preview Mode:</strong> Submissions are simulated in your browser (no data is stored or emailed).
+  <div class="preview-bar">
+    <span class="preview-pill"><span class="preview-dot"></span>Preview mode — simulated locally, nothing saved</span>
     <button type="button" id="fill-demo-btn">Fill sample data</button>
   </div>
 
   <main class="container">
-    <!-- Registration Form View -->
+    <!-- Registration Form -->
     <div class="card" id="form-view">
-      <div class="org-tag">Technical University of Munich — Ecosystem Dynamics &amp; Forest Management (EDFM)</div>
-      <h1>Global Forest Disturbance Change — Virtual Townhalls</h1>
+      <div class="kicker">TU Munich · Ecosystem Dynamics &amp; Forest Management</div>
+      <h1>Global Forest Disturbance Change — Townhalls</h1>
       <p class="subtitle">
-        Thank you for contributing to our global survey on forest disturbance change. Please register below for one of
-        three alternative virtual townhalls in Week 3 of 2027 to discuss synthesis results and potential co-authorship
-        (following the CRediT system).
+        Select one of three alternative virtual sessions to review synthesis results and discuss co-authorship under the CRediT taxonomy.
       </p>
 
-      <div class="info-box">
-        <strong>Registration deadline:</strong> January 8, 2027.
-        All survey contributors will be acknowledged in the manuscript. Participation in a townhall and the
-        subsequent contribution process opens the path toward co-authorship under the
-        <a href="https://credit.niso.org/" target="_blank" rel="noopener noreferrer">CRediT taxonomy</a>.
+      <div class="meta-strip">
+        <span>Closes <strong>January 8, 2027</strong></span>
+        <span class="meta-dot">·</span>
+        <span>60 min · Same agenda across all 3 slots</span>
+        <span class="meta-dot">·</span>
+        <a href="https://credit.niso.org/" target="_blank" rel="noopener noreferrer">CRediT authorship</a>
       </div>
 
       <div class="alert-error" id="error-box" role="alert"></div>
 
       <form id="reg-form">
-        <div class="section-title first">1. Choose one of the three alternative townhalls *</div>
-        <p class="section-hint" id="tz-note">Times shown in UTC (all three sessions cover the same agenda).</p>
+        <div class="section-head first">
+          <span class="section-label">Session *</span>
+          <span class="section-note" id="tz-note">Times in UTC</span>
+        </div>
 
         <div class="session-list" id="session-list" role="radiogroup" aria-label="Townhall sessions"></div>
 
-        <div class="section-title">2. Personal &amp; Academic Details</div>
+        <div class="section-head">
+          <span class="section-label">About You</span>
+        </div>
+
         <div class="grid-name">
           <div class="field">
-            <label class="field-label" for="title">Title <span class="optional">(opt.)</span></label>
-            <input type="text" id="title" name="title" maxlength="40" placeholder="Dr. / Prof.">
+            <label class="field-label" for="title">Title <span class="opt">(opt.)</span></label>
+            <input type="text" id="title" name="title" maxlength="40" placeholder="Dr.">
           </div>
           <div class="field">
             <label class="field-label" for="first_name">First name *</label>
-            <input type="text" id="first_name" name="first_name" required maxlength="100" placeholder="Alex">
+            <input type="text" id="first_name" name="first_name" required maxlength="100">
           </div>
           <div class="field">
             <label class="field-label" for="last_name">Last name *</label>
-            <input type="text" id="last_name" name="last_name" required maxlength="100" placeholder="Example">
+            <input type="text" id="last_name" name="last_name" required maxlength="100">
           </div>
         </div>
 
         <div class="grid-2">
           <div class="field">
-            <label class="field-label" for="email">Email address *</label>
+            <label class="field-label" for="email">Email *</label>
             <input type="email" id="email" name="email" required maxlength="254" placeholder="name@institution.org">
           </div>
           <div class="field">
-            <label class="field-label" for="orcid">ORCID <span class="optional">(if available)</span></label>
+            <label class="field-label" for="orcid">ORCID <span class="opt">(optional)</span></label>
             <input type="text" id="orcid" name="orcid" maxlength="64" placeholder="0000-0002-1825-0097">
           </div>
         </div>
 
         <div class="field">
-          <label class="field-label" for="website">Website <span class="optional">(if available)</span></label>
-          <input type="text" id="website" name="website" maxlength="300" placeholder="https://your-lab-or-profile.org">
+          <label class="field-label" for="website">Website <span class="opt">(optional)</span></label>
+          <input type="text" id="website" name="website" maxlength="300" placeholder="https://">
         </div>
 
-        <div class="section-title">3. Institutional Affiliation &amp; Postal Address</div>
-        <p class="section-hint">Required for accurate institutional affiliation records in the manuscript.</p>
+        <div class="section-head">
+          <span class="section-label">Affiliation</span>
+          <span class="section-note">For manuscript author records</span>
+        </div>
 
         <div class="grid-2">
           <div class="field">
             <label class="field-label" for="institution">Institution *</label>
-            <input type="text" id="institution" name="institution" required maxlength="200" placeholder="Technical University of Munich">
+            <input type="text" id="institution" name="institution" required maxlength="200">
           </div>
           <div class="field">
-            <label class="field-label" for="department">Department <span class="optional">(optional)</span></label>
-            <input type="text" id="department" name="department" maxlength="200" placeholder="School of Life Sciences / Department...">
+            <label class="field-label" for="department">Department <span class="opt">(optional)</span></label>
+            <input type="text" id="department" name="department" maxlength="200">
           </div>
         </div>
 
         <div class="field">
-          <label class="field-label" for="street">Postal address – street *</label>
-          <input type="text" id="street" name="street" required maxlength="200" placeholder="Hans-Carl-von-Carlowitz-Platz 2">
+          <label class="field-label" for="street">Street address *</label>
+          <input type="text" id="street" name="street" required maxlength="200">
         </div>
 
         <div class="grid-city">
           <div class="field">
             <label class="field-label" for="postal_code">Postal code *</label>
-            <input type="text" id="postal_code" name="postal_code" required maxlength="40" placeholder="85354">
+            <input type="text" id="postal_code" name="postal_code" required maxlength="40">
           </div>
           <div class="field">
             <label class="field-label" for="city">City *</label>
-            <input type="text" id="city" name="city" required maxlength="120" placeholder="Freising">
+            <input type="text" id="city" name="city" required maxlength="120">
           </div>
           <div class="field">
             <label class="field-label" for="country">Country *</label>
-            <input type="text" id="country" name="country" required maxlength="100" placeholder="Germany">
+            <input type="text" id="country" name="country" required maxlength="100">
           </div>
         </div>
 
-        <div class="section-title">4. Questionnaire Context</div>
+        <div class="section-head">
+          <span class="section-label">Survey Context</span>
+        </div>
 
         <div class="field">
-          <label class="field-label" for="main_biome">
-            What was the main biome you filled in the questionnaire for? *
-          </label>
+          <label class="field-label" for="main_biome">Main biome from questionnaire *</label>
           <select id="main_biome" name="main_biome" required>
-            <option value="" disabled selected>— Please select a biome —</option>
+            <option value="" disabled selected>Select biome…</option>
             <option value="Boreal">Boreal</option>
             <option value="Temperate">Temperate</option>
             <option value="Mediterranean">Mediterranean</option>
@@ -352,48 +412,41 @@
         </div>
 
         <div class="field">
-          <label class="field-label" for="question">
-            Questions or topics you'd like to discuss in the townhall <span class="optional">(optional)</span>
-          </label>
+          <label class="field-label" for="question">Questions or topics <span class="opt">(optional)</span></label>
           <textarea id="question" name="question" maxlength="2000"
-                    placeholder="Optional comments, questions, or synthesis aspects you would like us to cover..."></textarea>
+                    placeholder="Optional topics you'd like us to address during the townhall…"></textarea>
         </div>
 
         <label class="consent">
           <input type="checkbox" id="privacy_accepted" name="privacy_accepted" value="1" required>
           <span>
-            I agree that my registration and affiliation details will be stored and processed solely for organizing the
-            virtual forest disturbance change townhalls, sending meeting links, and preparing manuscript acknowledgement
-            or co-authorship metadata.
-            (<a href="https://www.tum.de/en/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>)
+            I consent to storing my details solely for organizing these townhalls and preparing manuscript acknowledgement or co-authorship records
+            (<a href="https://www.tum.de/en/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>).
           </span>
         </label>
 
-        <button type="submit" class="btn btn-primary btn-full">Register for Townhall</button>
+        <button type="submit" class="btn btn-primary btn-full">Register</button>
       </form>
     </div>
 
-    <!-- Confirmation Preview View -->
+    <!-- Confirmation Preview -->
     <div class="card hidden" id="confirmed-view">
-      <div class="status-pill">Registration Confirmed (Preview)</div>
-      <h1 id="conf-heading">Thank you!</h1>
+      <div class="pill">Confirmed (Preview)</div>
+      <h1 id="conf-heading">You're registered</h1>
       <p class="subtitle" id="conf-lead"></p>
 
       <div class="summary" id="conf-summary"></div>
 
       <div class="actions">
         <button type="button" class="btn btn-primary" id="download-ics-btn">Add to Calendar (.ics)</button>
-        <button type="button" class="btn btn-secondary" id="back-btn">Back to Registration Form</button>
+        <button type="button" class="btn btn-secondary" id="back-btn">Back</button>
       </div>
-      <p style="font-size:0.88rem; color:var(--muted); margin:0;">
-        In the live deployment, a confirmation email with the Zoom join link and attached <code>.ics</code> file is
-        automatically sent from your TUM Exchange mailbox.
+      <p class="note">
+        In the live version, a confirmation email with the Zoom link and attached <code>.ics</code> file is sent automatically.
       </p>
     </div>
 
-    <p class="footer">
-      Technical University of Munich — Ecosystem Dynamics &amp; Forest Management (EDFM)
-    </p>
+    <p class="footer">TU Munich · Ecosystem Dynamics &amp; Forest Management (EDFM)</p>
   </main>
 
   <script>
@@ -401,26 +454,29 @@
       var SESSIONS = [
         {
           id: "session-1",
-          title: "Townhall 1 — Monday, Jan 18 (Americas / Europe Evening)",
+          title: "Session 1",
+          region: "Americas / Europe",
           start_utc: "2027-01-18T20:00:00Z",
+          utc_label: "20:00–21:00 UTC · 21:00–22:00 CET",
           duration_minutes: 60,
-          description: "Monday, Jan 18, 2027 · 21:00–22:00 CET (20:00–21:00 UTC). Synthesis update, open discussion, and co-authorship process (CRediT).",
           meeting_url: "https://tum-conf.zoom.us/j/PREVIEW-LINK-SESSION-1"
         },
         {
           id: "session-2",
-          title: "Townhall 2 — Tuesday, Jan 19 (Europe / Africa / Americas)",
+          title: "Session 2",
+          region: "Europe / Africa / Americas",
           start_utc: "2027-01-19T15:00:00Z",
+          utc_label: "15:00–16:00 UTC · 16:00–17:00 CET",
           duration_minutes: 60,
-          description: "Tuesday, Jan 19, 2027 · 16:00–17:00 CET (15:00–16:00 UTC). Same agenda as Townhall 1 — afternoon CET / morning Americas slot.",
           meeting_url: "https://tum-conf.zoom.us/j/PREVIEW-LINK-SESSION-2"
         },
         {
           id: "session-3",
-          title: "Townhall 3 — Wednesday, Jan 20 (Asia-Pacific / Europe Morning)",
+          title: "Session 3",
+          region: "Asia-Pacific / Europe",
           start_utc: "2027-01-20T07:00:00Z",
+          utc_label: "07:00–08:00 UTC · 08:00–09:00 CET",
           duration_minutes: 60,
-          description: "Wednesday, Jan 20, 2027 · 08:00–09:00 CET (07:00–08:00 UTC). Same agenda as Townhalls 1 & 2 — morning CET / afternoon Asia-Pacific slot.",
           meeting_url: "https://tum-conf.zoom.us/j/PREVIEW-LINK-SESSION-3"
         }
       ];
@@ -430,42 +486,36 @@
         var end = new Date(start.getTime() + durationMin * 60000);
         try {
           var dateStr = new Intl.DateTimeFormat(undefined, {
-            weekday: "short", year: "numeric", month: "short", day: "numeric"
+            weekday: "short", month: "short", day: "numeric", year: "numeric"
           }).format(start);
           var startStr = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(start);
           var endStr = new Intl.DateTimeFormat(undefined, {
             hour: "2-digit", minute: "2-digit", timeZoneName: "short"
           }).format(end);
-          return dateStr + " · " + startStr + " – " + endStr;
+          return dateStr + " · " + startStr + "–" + endStr;
         } catch (e) {
-          return isoUtc + " (" + durationMin + " min)";
+          return isoUtc;
         }
       }
 
       try {
         var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if (tz) {
-          document.getElementById("tz-note").textContent =
-            "Times shown in your local time (" + tz + "). All three sessions cover the same agenda.";
-        }
+        if (tz) document.getElementById("tz-note").textContent = "Local time (" + tz + ")";
       } catch (e) {}
 
-      // Render session cards
       var listEl = document.getElementById("session-list");
       SESSIONS.forEach(function (s) {
         var label = document.createElement("label");
         label.className = "session-option";
         label.innerHTML =
-          '<div class="session-header">' +
-            '<div class="session-left">' +
-              '<input type="radio" name="session_id" value="' + s.id + '" required>' +
-              '<div>' +
-                '<div class="session-name">' + s.title + '</div>' +
-                '<div class="session-time">' + formatLocalRange(s.start_utc, s.duration_minutes) + '</div>' +
-              '</div>' +
+          '<div class="session-left">' +
+            '<input type="radio" name="session_id" value="' + s.id + '" required>' +
+            '<div>' +
+              '<div class="session-time">' + formatLocalRange(s.start_utc, s.duration_minutes) + '</div>' +
+              '<div class="session-sub">' + s.title + ' · ' + s.utc_label + '</div>' +
             '</div>' +
           '</div>' +
-          '<p class="session-desc">' + s.description + '</p>';
+          '<span class="session-tag">' + s.region + '</span>';
         label.querySelector("input").addEventListener("change", function () {
           document.querySelectorAll(".session-option").forEach(function (c) { c.classList.remove("is-selected"); });
           label.classList.add("is-selected");
@@ -499,17 +549,16 @@
         errBox.style.display = "none";
 
         var fd = new FormData(ev.target);
-        var sid = fd.get("session_id");
-        var sess = SESSIONS.find(function (x) { return x.id === sid; });
+        var sess = SESSIONS.find(function (x) { return x.id === fd.get("session_id"); });
         if (!sess) {
-          errBox.textContent = "Please select one of the three townhall sessions.";
+          errBox.textContent = "Please select one of the three sessions.";
           errBox.style.display = "block";
           return;
         }
 
         var orcid = normalizeOrcid(fd.get("orcid"));
         if (orcid === null) {
-          errBox.textContent = "Please enter a valid ORCID (e.g., 0000-0002-1825-0097) or leave it blank.";
+          errBox.textContent = "Enter a valid ORCID (e.g., 0000-0002-1825-0097) or leave it blank.";
           errBox.style.display = "block";
           return;
         }
@@ -525,22 +574,22 @@
           ((fd.get("department") || "").trim() ? ", " + fd.get("department").trim() : "");
 
         lastSession = sess;
-        document.getElementById("conf-heading").textContent = "Thank you, " + displayName + "!";
+        document.getElementById("conf-heading").textContent = "You're registered, " + displayName;
         document.getElementById("conf-lead").innerHTML =
-          "In the live site, a confirmation email with the meeting link and calendar invite will be sent to <strong>" +
+          "In the live site, a confirmation email and calendar invite will be sent to <strong>" +
           escapeHtml(fd.get("email")) + "</strong>.";
 
         var rows = [
-          ["Selected Session", "<strong>" + escapeHtml(sess.title) + "</strong>"],
-          ["Date & Time", escapeHtml(formatLocalRange(sess.start_utc, sess.duration_minutes))],
-          ["Meeting Link", '<a href="' + sess.meeting_url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(sess.meeting_url) + "</a>"],
-          ["Main Biome", escapeHtml(fd.get("main_biome"))],
-          ["Institution", escapeHtml(inst)],
-          ["Postal Address", escapeHtml(address)]
+          ["Session", "<strong>" + escapeHtml(sess.title + " — " + sess.region) + "</strong>"],
+          ["Date & time", escapeHtml(formatLocalRange(sess.start_utc, sess.duration_minutes))],
+          ["Meeting link", '<a href="' + sess.meeting_url + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(sess.meeting_url) + "</a>"],
+          ["Main biome", escapeHtml(fd.get("main_biome"))],
+          ["Affiliation", escapeHtml(inst)],
+          ["Address", escapeHtml(address)]
         ];
         if (orcid) rows.push(["ORCID", '<a href="' + orcid + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(orcid) + "</a>"]);
         if ((fd.get("website") || "").trim()) rows.push(["Website", escapeHtml(fd.get("website").trim())]);
-        if ((fd.get("question") || "").trim()) rows.push(["Your Comment", escapeHtml(fd.get("question").trim())]);
+        if ((fd.get("question") || "").trim()) rows.push(["Comment", escapeHtml(fd.get("question").trim())]);
 
         document.getElementById("conf-summary").innerHTML = rows.map(function (r) {
           return '<div class="row"><div class="row-label">' + r[0] + '</div><div class="row-val">' + r[1] + '</div></div>';
@@ -566,7 +615,7 @@
           "DTEND:" + formatIcsUtc(end),
           "SUMMARY:Global Forest Disturbance Change — " + lastSession.title,
           "LOCATION:" + lastSession.meeting_url,
-          "DESCRIPTION:" + lastSession.description + "\\n\\nMeeting Link: " + lastSession.meeting_url,
+          "DESCRIPTION:Global Forest Disturbance Change Virtual Townhall\\n\\nMeeting Link: " + lastSession.meeting_url,
           "END:VEVENT",
           "END:VCALENDAR"
         ].join("\r\n") + "\r\n";
@@ -592,13 +641,13 @@
         document.getElementById("orcid").value = "0000-0002-1825-0097";
         document.getElementById("website").value = "https://iland-model.org";
         document.getElementById("institution").value = "Technical University of Munich";
-        document.getElementById("department").value = "Ecosystem Dynamics and Forest Management";
+        document.getElementById("department").value = "Ecosystem Dynamics & Forest Management";
         document.getElementById("street").value = "Hans-Carl-von-Carlowitz-Platz 2";
         document.getElementById("postal_code").value = "85354";
         document.getElementById("city").value = "Freising";
         document.getElementById("country").value = "Germany";
         document.getElementById("main_biome").value = "Temperate";
-        document.getElementById("question").value = "Interested in contributing to the temperate disturbance synthesis and CRediT review.";
+        document.getElementById("question").value = "Interested in contributing to the temperate synthesis and CRediT review.";
         document.getElementById("privacy_accepted").checked = true;
       });
     })();
